@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RubyController2 : MonoBehaviour
-
+public class RubyController : MonoBehaviour
 {
     // public // this shows in the inspector of Unity 
     // private protected // these dont show
@@ -11,7 +10,7 @@ public class RubyController2 : MonoBehaviour
     private int HP;      // current hp that the player has
 
     // same as the below one
-    public int currentHP { get => HP; }
+    public int currentHP { get => HP; } 
     //public int currentHP()
     //{
     //    return HP;
@@ -75,4 +74,3 @@ public class RubyController2 : MonoBehaviour
     }
 
 }
-
