@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1853190584381225615}
   - component: {fileID: 1853190584381225608}
-  - component: {fileID: 1853190584381225609}
+  - component: {fileID: 1907793592470880687}
   - component: {fileID: 1853190584381225614}
   m_Layer: 0
   m_Name: CollectibleHealth
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1853190584381225609
+--- !u!114 &1907793592470880687
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,10 +93,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1853190584381225610}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83ca3866495adc447985d1fcd92044dd, type: 3}
+  m_Script: {fileID: 11500000, guid: 393428763d41e8d4b8a2882e714bdb8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healAmount: 5
+  healAmount: 2
 --- !u!58 &1853190584381225614
 CircleCollider2D:
   m_ObjectHideFlags: 0

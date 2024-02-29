@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 464141245997171409}
   - component: {fileID: 8623714436475693854}
+  - component: {fileID: 7584759661849918664}
   - component: {fileID: 8055682099374628178}
-  - component: {fileID: 6895198448536594631}
   m_Layer: 0
   m_Name: CollectibleAmmo
   m_TagString: Untagged
@@ -84,6 +84,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7584759661849918664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7990104995952397808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 393428763d41e8d4b8a2882e714bdb8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healAmount: -2
 --- !u!58 &8055682099374628178
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -100,16 +113,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.98
---- !u!114 &6895198448536594631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7990104995952397808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83ca3866495adc447985d1fcd92044dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healAmount: -5

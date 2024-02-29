@@ -4,73 +4,97 @@ using UnityEngine;
 
 public class RubyController : MonoBehaviour
 {
-    // public // this shows in the inspector of Unity 
-    // private protected // these dont show
+    public float speed = 3.0f;
 
-    private int HP;      // current hp that the player has
+    public int maxHealth = 5;
 
-    // same as the below one
-    public int currentHP { get => HP; } 
-    //public int currentHP()
-    //{
-    //    return HP;
-    //}
+    public GameObject projectilePrefab;
 
-    public int maxHP;   // the maximum hp that the player has
+    public int health { get { return currentHealth; } }
+    int currentHealth;
 
-    [Range(0, 100f)]
-    public float movementSpeed = 1;
-    public Rigidbody2D rb;
-    private float hoz;
-    private float ver;
+    public float timeInvincible = 2.0f;
+    bool isInvincible;
+    float invincibleTimer;
+
+    Rigidbody2D rigidbody2d;
+    float horizontal;
+    float vertical;
+
+    Animator animator;
+    Vector2 lookDirection = new Vector2(1, 0);
+
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rigidbody2d = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-        hoz = Input.GetAxis("Horizontal");
-        ver = Input.GetAxis("Vertical");
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        Vector2 move = new Vector2(horizontal, vertical);
+
+        if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
         {
-            ChangeHP(-5); //damaging player
+            lookDirection.Set(move.x, move.y);
+            lookDirection.Normalize();
         }
-        if (Input.GetKeyDown(KeyCode.Keypad0))
+
+        animator.SetFloat("Look X", lookDirection.x);
+        animator.SetFloat("Look Y", lookDirection.y);
+        animator.SetFloat("Speed", move.magnitude);
+
+        if (isInvincible)
         {
-            ChangeHP(5); // healing player
+            invincibleTimer -= Time.deltaTime;
+            if (invincibleTimer < 0)
+                isInvincible = false;
         }
 
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Launch();
+        }
     }
-    private void FixedUpdate()
+
+    void FixedUpdate()
     {
-        Vector2 positionToMove = new Vector2(hoz, ver) * movementSpeed * Time.fixedDeltaTime;
-        Vector2 newPos = (Vector2)transform.position + positionToMove;
-        rb.MovePosition(newPos);
+        Vector2 position = rigidbody2d.position;
+        position.x = position.x + speed * horizontal * Time.deltaTime;
+        position.y = position.y + speed * vertical * Time.deltaTime;
+
+        rigidbody2d.MovePosition(position);
     }
-    /// <summary>
-    /// Value should be given be the enemy
-    /// </summary>
-    public void ChangeHP(int value) // for the enemy to call to deduct the player hp
+
+    public void ChangeHealth(int amount)
     {
-        HP += value;
+        if (amount < 0)
+        {
+            if (isInvincible)
+                return;
 
-        //if (HP > maxHP)
-        //{
-        //    HP = maxHP;
-        //}
-        //if (HP < 0)
-        //{
-        //    HP = 0;
-        //}
+            isInvincible = true;
+            invincibleTimer = timeInvincible;
+        }
 
-        // same as the above
-        HP = Mathf.Clamp(HP, 0, maxHP);
-
-        Debug.Log("player hp is now " + HP);
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        Debug.Log(currentHealth + "/" + maxHealth);
     }
 
+    void Launch()
+    {
+        GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
+
+        Projectile projectile = projectileObject.GetComponent<Projectile>();
+        projectile.Launch(lookDirection, 300);
+
+        animator.SetTrigger("Launch");
+    }
 }
